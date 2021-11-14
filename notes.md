@@ -1,0 +1,2 @@
+- form to submit new books to the library
+- show the books present in the library on the page
