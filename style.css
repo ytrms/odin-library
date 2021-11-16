@@ -16,10 +16,29 @@ body {
     /* border: 2px solid #575aff; */
     border-radius: 20px;
     padding: 15px;
-    background: linear-gradient(90deg, hsla(238, 100%, 71%, 1) 0%, hsla(295, 100%, 84%, 1) 100%);
+    background: linear-gradient(90deg, #6b70ff 0%, #f8adff 100%);
     color: #FFFBFA;
 }
 
 .cardTitle {
     font-weight: 800;
+}
+
+.addBook {
+    border-radius: 12px;
+    /* background: #e9b9cf; */
+    background-color: white;
+    border: 2px solid #e9b9cf;
+    padding: 8px;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.addBook:hover {
+    background-color: lavenderblush;
+}
+
+.addBook:active {
+    background-color: #f8adff;
 }
