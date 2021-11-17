@@ -4,6 +4,7 @@
 
 body {
     background-color: #FFFBFA;
+    margin: 8px;
 }
 
 .bookList {
@@ -14,25 +15,27 @@ body {
 
 .card {
     /* border: 2px solid #575aff; */
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 15px;
     background: linear-gradient(90deg, #6b70ff 0%, #f8adff 100%);
     color: #FFFBFA;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .cardTitle {
-    font-weight: 800;
+    font-weight: 802;
 }
 
 .addBook {
-    border-radius: 12px;
+    border-radius: 8px;
     /* background: #e9b9cf; */
     background-color: white;
     border: 2px solid #e9b9cf;
     padding: 8px;
     color: black;
     font-weight: 700;
-    margin-bottom: 8px;
 }
 
 .addBook:hover {
@@ -41,4 +44,38 @@ body {
 
 .addBook:active {
     background-color: #f8adff;
+}
+
+.deleteCardButton {
+    background-color: #FFFBFA;
+    border: 1px solid #e9b9cf;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.deleteCardButton:hover {
+    background-color: lavenderblush;
+}
+
+.deleteCardButton:active {
+    background-color: #f8adff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.siteTitle {
+font-weight: 600;
 }

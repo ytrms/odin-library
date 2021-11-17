@@ -28,7 +28,7 @@ let myLibrary = [got, lotr, hobbit];
 
 const cards = document.getElementsByClassName('bookList')[0];
 
-function addBookToDB() {
+function addBookToLibrary() {
     const title = prompt("Title of the book");
     const author = prompt("Author of the book");
     const pages = prompt("Number of pages in the book");
@@ -42,10 +42,12 @@ function addBookToDB() {
  * Gets a Book object and returns a formatted card
  * for the book.
  * @param {Book} book 
+ * @param {number} id
  */
-function getBookCard(book) {
+function getBookCard(book, id) {
     let card = document.createElement('div');
     card.classList.add('card');
+    card.dataset.id = String(id);
 
     let cardTitle = document.createElement('div');
     cardTitle.classList.add('cardTitle');
@@ -91,7 +93,7 @@ function refreshBookList(library) {
     for (const key in library) {
         if (Object.hasOwnProperty.call(library, key)) {
             const book = library[key];
-            cards.appendChild(getBookCard(book));
+            cards.appendChild(getBookCard(book, Number(key)));
         }
     }
 }
@@ -102,23 +104,22 @@ function refreshBookList(library) {
  * @param {Book[]} [library] library
  */
 function removeBookFromLibrary(bookTitle, library) {
+    const cards = document.getElementsByClassName('card');
     for (const key in library) {
         if (Object.hasOwnProperty.call(library, key)) {
             const book = library[key];
-            if (book.name.toLowerCase() === bookTitle.toLowerCase()) {
-
-            }
+            const cardToDelete = document.querySelector(`[data-id=${key}]`);
         }
     }
 }
 
 const addBookButton = document.getElementsByClassName('addBook')[0];
 addBookButton.addEventListener('click', () => {
-    addBookToDB();
+    addBookToLibrary();
     refreshBookList();
 });
 
 const deleteBookButtons = document.getElementsByClassName('deleteCardButton');
-
+console.log(deleteBookButtons);
 
 refreshBookList(myLibrary);
