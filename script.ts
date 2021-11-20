@@ -16,6 +16,10 @@ class Book {
     this.pages = pages;
     this.read = read;
   }
+
+  toggleReadStatus() {
+    this.read = !this.read;
+  }
 }
 
 // sample data for the library
@@ -25,6 +29,8 @@ const hobbit = new Book("The Hobbit", "JRR Tolkien", 300, false);
 let myLibrary = [got, lotr, hobbit];
 
 const list = document.getElementsByClassName('list')[0];
+
+// LIBRARY MANAGEMENT LOGIC //
 
 /**
  * Takes a book and returns a formatted card with the book's information.
@@ -62,11 +68,16 @@ function getBookCard(book: Book, bookIndex: number) {
   deleteCardButton.classList.add('deleteCardButton');
   deleteCardButton.textContent = "Delete";
 
+  let toggleReadButton = document.createElement('button');
+  toggleReadButton.classList.add('toggleReadButton');
+  toggleReadButton.textContent = "Toggle Read";
+
   card.appendChild(cardTitle);
   card.appendChild(cardAuthor);
   card.appendChild(cardPages);
   card.appendChild(cardReadStatus);
   card.appendChild(deleteCardButton);
+  card.appendChild(toggleReadButton);
   return card;
 }
 
@@ -82,6 +93,8 @@ function refreshList(library: Book[], container: Element) {
     container.appendChild(card);
   });
 }
+
+// NEW BOOK BUTTON LOGIC //
 
 /**
  * Gets new book information from the user and an existing library.
@@ -99,7 +112,11 @@ function addBookToLibrary(library: Book[]) {
 }
 
 /**
- * Handles what happens when the user clicks on "Add Book"
+ * Handles what happens when the user clicks on "Add Book."
+ * It adds a new book to the given library,
+ * updates the global library,
+ * refreshes the cards on screen,
+ * and activates the delete buttons.
  * @param library Library of books to show on screen
  * @param container Element to contain the book cards
  */
@@ -108,28 +125,40 @@ function newBookButtonClickHandler(library: Book[], container: Element) {
   myLibrary = [...newLib];
   refreshList(myLibrary, container);
   activateDeleteButtons();
+  activateToggleButtons();
 }
 
+// DELETE BUTTON LOGIC //
+
+/**
+ * Deletes a given book from a given library.
+ * @param bookId Index of the book to delete
+ * @param library Library to delete the book from
+ * @returns New library without the book given
+ */
 function removeBookFromLibrary(bookId: number, library: Book[]) {
   return library.filter((book, index) => {
     return bookId != index;
   })
 }
 
-refreshList(myLibrary, list);
-
-const newBookButton = document.getElementsByClassName('addBook')[0];
-newBookButton.addEventListener('click', () => newBookButtonClickHandler(myLibrary, list));
-
+/**
+ * Handles what happens when a user clicks on a delete button.
+ * It removes a book from the library, updates the global library,
+ * refreshes the screen, and activates the delete buttons.
+ * @param e Event on delete button
+ */
 function deleteBookButtonClickHandler(e: Event) {
   const libWithBookRemoved = removeBookFromLibrary(Number(e.target['parentElement'].dataset.id), myLibrary);
   myLibrary = [...libWithBookRemoved];
   refreshList(myLibrary, list);
-  let deleteBookButtons = document.getElementsByClassName('deleteCardButton');
-  console.log({ myLibrary }, { deleteBookButtons })
   activateDeleteButtons();
+  activateToggleButtons();
 }
 
+/**
+ * Adds event listeners to delete buttons
+ */
 function activateDeleteButtons() {
   let deleteBookButtons = document.getElementsByClassName('deleteCardButton');
   for (let i = 0; i < deleteBookButtons.length; i++) {
@@ -140,4 +169,34 @@ function activateDeleteButtons() {
   }
 }
 
-activateDeleteButtons();
+// TOGGLE READ STATUS BUTTONS LOGIC //
+
+function activateToggleButtons() {
+  let toggleReadStatusButtons = document.getElementsByClassName('toggleReadButton');
+  for (let i = 0; i < toggleReadStatusButtons.length; i++) {
+    const button = toggleReadStatusButtons[i];
+    button.addEventListener('click', (e) => {
+      toggleReadButtonClickHandler(e);
+    })
+  }
+}
+
+function toggleReadButtonClickHandler(e: Event) {
+  const bookIndex = Number(e.target['parentElement'].dataset.id)
+  myLibrary[bookIndex].toggleReadStatus();
+  refreshList(myLibrary, list);
+  activateDeleteButtons();
+  activateToggleButtons();
+}
+
+function main() {
+  refreshList(myLibrary, list);
+
+  const newBookButton = document.getElementsByClassName('addBook')[0];
+  newBookButton.addEventListener('click', () => newBookButtonClickHandler(myLibrary, list));
+
+  activateDeleteButtons();
+  activateToggleButtons();
+}
+
+main();

@@ -8,7 +8,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc script.ts --watch"
+    "start": "tsc --watch"
   },
   "repository": {
     "type": "git",

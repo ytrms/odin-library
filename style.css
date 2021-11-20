@@ -38,15 +38,18 @@ body {
     font-weight: 700;
 }
 
-.addBook:hover {
+.addBook:hover,
+.toggleReadButton:hover {
     background-color: lavenderblush;
 }
 
-.addBook:active {
+.addBook:active,
+.toggleReadButton:active {
     background-color: #f8adff;
 }
 
-.deleteCardButton {
+.deleteCardButton,
+.toggleReadButton {
     background-color: #FFFBFA;
     border: 1px solid #e9b9cf;
     border-radius: 8px;
