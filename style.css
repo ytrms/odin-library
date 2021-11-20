@@ -7,7 +7,7 @@ body {
     margin: 8px;
 }
 
-.bookList {
+.list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;

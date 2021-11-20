@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  },
+  "name": "odin-library",
+  "version": "1.0.0",
+  "description": "Exercise from the Odin Project",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc script.ts --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytrms/odin-library.git"
+  },
+  "author": "Lorenzo",
+  "bugs": {
+    "url": "https://github.com/ytrms/odin-library/issues"
+  },
+  "homepage": "https://github.com/ytrms/odin-library#readme"
+}
