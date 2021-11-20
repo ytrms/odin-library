@@ -102,12 +102,25 @@ function refreshList(library: Book[], container: Element) {
  * @returns A new library with the given book added.
  */
 function addBookToLibrary(library: Book[]) {
-  const title = prompt("Title of the book");
-  const author = prompt("Author of the book");
-  const pages = prompt("Number of pages in the book");
-  const read = prompt("Have you read the book? yes/no");
+  let title = null;
+  while (title == null || title == "") {
+    title = prompt("Please enter the title of the book:");
+    console.log(title);
+  }
+  let author = null;
+  while (author == null || author == "") {
+    author = prompt("Please enter the author of the book:");
+  }
+  let pages = null;
+  while (pages == null || pages == "" || Number.isNaN(Number(pages))) {
+    pages = prompt("Please enter the number of pages in the book: (must be a number)");
+  }
+  let read = null;
   let readBool = false;
-  read === "yes" ? readBool = true : readBool = false;
+  while (read == null || read == "") {
+    read = prompt("Have you read the book? yes/no");
+    read === "yes" ? readBool = true : readBool = false;
+  }
   return [...library, new Book(title, author, Number(pages), readBool)];
 }
 
