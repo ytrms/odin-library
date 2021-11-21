@@ -1,4 +1,3 @@
-"use strict";
 // 1. Have a list of books in a library array
 // 2. Show those books in cards/a list
 // 3. Have a button where people can add a new book
@@ -15,11 +14,25 @@ class Book {
         this.read = !this.read;
     }
 }
-// sample data for the library
-const got = new Book("A Game of Thrones", "George Martin", 800, true);
-const lotr = new Book("The Fellowship of the Ring", "JRR Tolkien", 1000, true);
-const hobbit = new Book("The Hobbit", "JRR Tolkien", 300, false);
-let myLibrary = [got, lotr, hobbit];
+let myLibrary = [];
+// if localStorage is empty, load sample data to localStorage
+if (localStorage.getItem('library') === null) {
+    // sample data for the library
+    const got = new Book("A Game of Thrones", "George Martin", 800, true);
+    const lotr = new Book("The Fellowship of the Ring", "JRR Tolkien", 1000, true);
+    const hobbit = new Book("The Hobbit", "JRR Tolkien", 300, false);
+    myLibrary = [got, lotr, hobbit];
+    localStorage.setItem("library", JSON.stringify(myLibrary));
+}
+else {
+    myLibrary = JSON.parse(localStorage.getItem('library'));
+    // reinstantiate Book items
+    let actualBooks = [];
+    myLibrary.forEach(book => {
+        actualBooks.push(new Book(book.name, book.author, book.pages, book.read));
+    });
+    myLibrary = [...actualBooks];
+}
 const list = document.getElementsByClassName('list')[0];
 // LIBRARY MANAGEMENT LOGIC //
 /**
@@ -86,7 +99,6 @@ function addBookToLibrary(library) {
     let title = null;
     while (title == null || title == "") {
         title = prompt("Please enter the title of the book:");
-        console.log(title);
     }
     let author = null;
     while (author == null || author == "") {
@@ -116,6 +128,7 @@ function addBookToLibrary(library) {
 function newBookButtonClickHandler(library, container) {
     const newLib = addBookToLibrary(library);
     myLibrary = [...newLib];
+    localStorage.setItem('library', JSON.stringify(myLibrary));
     refreshList(myLibrary, container);
     activateDeleteButtons();
     activateToggleButtons();
@@ -141,6 +154,7 @@ function removeBookFromLibrary(bookId, library) {
 function deleteBookButtonClickHandler(e) {
     const libWithBookRemoved = removeBookFromLibrary(Number(e.target['parentElement'].dataset.id), myLibrary);
     myLibrary = [...libWithBookRemoved];
+    localStorage.setItem('library', JSON.stringify(myLibrary));
     refreshList(myLibrary, list);
     activateDeleteButtons();
     activateToggleButtons();
@@ -169,6 +183,7 @@ function activateToggleButtons() {
 }
 function toggleReadButtonClickHandler(e) {
     const bookIndex = Number(e.target['parentElement'].dataset.id);
+    console.log({ myLibrary }, { bookIndex }, myLibrary[bookIndex]);
     myLibrary[bookIndex].toggleReadStatus();
     refreshList(myLibrary, list);
     activateDeleteButtons();
